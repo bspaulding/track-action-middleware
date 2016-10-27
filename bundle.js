@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.track-action-middleware = factory());
+  (global.trackActionMiddleware = factory());
 }(this, (function () { 'use strict';
 
 var asyncGenerator = function () {
