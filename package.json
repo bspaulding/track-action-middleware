@@ -5,7 +5,9 @@
   "main": "bundle.js",
   "scripts": {
     "build": "rollup -c",
-    "test": "flow check && jest"
+    "flow": "flow check",
+    "lint": "eslint src",
+    "test": "jest"
   },
   "author": "Bradley J. Spaulding",
   "license": "MIT",
