@@ -1,10 +1,10 @@
 {
   "name": "track-action-middleware",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A middleware for interfacing actions with some other event tracking or analytics system.",
   "main": "bundle.js",
   "scripts": {
-		"build": "rollup -c",
+    "build": "rollup -c",
     "test": "flow check && jest"
   },
   "author": "Bradley J. Spaulding",
