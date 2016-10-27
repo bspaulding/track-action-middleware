@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (factory((global.track-action-middleware = global.track-action-middleware || {})));
-}(this, (function (exports) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global.track-action-middleware = factory());
+}(this, (function () { 'use strict';
 
 var asyncGenerator = function () {
   function AwaitValue(value) {
@@ -208,7 +208,7 @@ var set = function set(object, property, value, receiver) {
   return value;
 };
 
-var makeTrackActionMiddleware = function makeTrackActionMiddleware(_ref) {
+var makeMiddleware = function makeMiddleware(_ref) {
 	var actionTypes = _ref.actionTypes,
 	    selector = _ref.selector,
 	    trackAction = _ref.trackAction;
@@ -228,8 +228,6 @@ var makeTrackActionMiddleware = function makeTrackActionMiddleware(_ref) {
 	};
 };
 
-exports.makeTrackActionMiddleware = makeTrackActionMiddleware;
-
-Object.defineProperty(exports, '__esModule', { value: true });
+return makeMiddleware;
 
 })));
