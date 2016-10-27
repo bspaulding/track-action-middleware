@@ -17,7 +17,7 @@ type Action = {
 	type: string;
 };
 
-export const makeTrackActionMiddleware = ({
+const makeMiddleware = ({
 	actionTypes,
 	selector,
 	trackAction
@@ -33,3 +33,5 @@ export const makeTrackActionMiddleware = ({
 		return next(action);
 	};
 };
+
+export default makeMiddleware

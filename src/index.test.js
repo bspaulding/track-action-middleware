@@ -6,7 +6,7 @@ import {
   applyMiddleware,
   createStore
 } from 'redux';
-import { makeTrackActionMiddleware } from './index';
+import makeMiddleware from './index';
 
 const TRACKED_ACTION = 'TRACKED_ACTION';
 
@@ -19,7 +19,7 @@ function makeStoreWithMiddleware({ selector = () => ({}), trackAction }: MakeSto
   return createStore(
     () => ({}),
     applyMiddleware(
-      makeTrackActionMiddleware({
+      makeMiddleware({
         actionTypes: [TRACKED_ACTION],
         environment: 'localhost',
         product: 'ConsentAdminUITests',
@@ -31,7 +31,7 @@ function makeStoreWithMiddleware({ selector = () => ({}), trackAction }: MakeSto
   );
 }
 
-describe('makeTrackActionMiddleware', function() {
+describe('makeMiddleware', function() {
   beforeEach(function() {
     this.sandbox = sinon.sandbox.create();
   });
