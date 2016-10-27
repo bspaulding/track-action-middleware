@@ -1,4 +1,4 @@
 test:
-	pre:
-		- npm run flow
-		- npm run lint
+  pre:
+    - npm run flow
+    - npm run lint
