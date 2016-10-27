@@ -34,4 +34,4 @@ const makeMiddleware = ({
 	};
 };
 
-export default makeMiddleware
+export default makeMiddleware;
