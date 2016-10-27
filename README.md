@@ -24,13 +24,10 @@ const trackActionMiddleware = makeTrackActionMiddleware({
 	trackAction
 });
 
-// ...
-	applyMiddleware(
-		// ...
-		trackActionMiddleware
-		// ...
-	)
-// ...
+applyMiddleware(
+	trackActionMiddleware
+)
+```
 
 ## Using a selector
 
@@ -46,7 +43,6 @@ const trackActionMiddleware = makeTrackActionMiddleware({
 		userId: getUserId(state)
 	})
 });
-
 ```
 
 The selector will also be passed the action itself, so you can switch on the action
@@ -70,5 +66,4 @@ const trackActionMiddleware = makeTrackActionMiddleware({
 		}
 	}
 });
-
 ```
