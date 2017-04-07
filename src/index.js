@@ -4,7 +4,7 @@ type MakeMiddlewareArgs = {|
 	actionTypes: Array<string>;
 	environment: string;
 	product: string;
-	selector: (state: Object) => Object;
+	selector?: (state: Object) => Object;
 	segmentKey: string;
 	trackAction: Function;
 |};
@@ -19,7 +19,7 @@ type Action = {
 
 const makeMiddleware = ({
 	actionTypes,
-	selector,
+	selector = () => ({}),
 	trackAction
 }: MakeMiddlewareArgs) => {
 	return (store: Store) => (next: Function) => (action: Action) => {
