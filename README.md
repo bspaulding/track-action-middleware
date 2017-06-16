@@ -67,3 +67,21 @@ const trackActionMiddleware = makeTrackActionMiddleware({
 	}
 });
 ```
+
+## Custom event names
+
+By default, the action type will be passed as the event name. If you want to map action types to a different event name, pass `getEventName` to `makeTrackActionMiddleware`.
+
+```javascript
+const trackActionMiddleware = makeTrackActionMiddleware({
+	actionTypes: [
+		ACTION_ONE_TYPE,
+		ACTION_TWO_TYPE
+	],
+	// the first parameter is the action about to be tracked,
+	// so you can use any payload data in the action
+	// the second parameter is the result of your selector
+	getEventName = (action, selection) => `my-prefix-${action.type}-${selection.companyId}`
+	// ...
+});
+```
