@@ -1,33 +1,24 @@
 /* @flow */
 
 import assert from 'assert';
-import {
-  applyMiddleware,
-  createStore
-} from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import makeMiddleware from './index';
 
 const TRACKED_ACTION = 'TRACKED_ACTION';
 
-type MakeStoreArgs = {
-  selector?: Function;
-  trackAction: Function;
-};
-
-function makeStoreWithMiddleware({ selector = () => ({}), trackAction }: MakeStoreArgs) {
+function makeStoreWithMiddleware(args: Object) {
 	return createStore(
-    () => ({}),
-    applyMiddleware(
-      makeMiddleware({
-	actionTypes: [TRACKED_ACTION],
-	environment: 'localhost',
-	product: 'ConsentAdminUITests',
-	selector,
-	segmentKey: 'FAKEKEY',
-	trackAction
-})
-    )
-  );
+		() => ({}),
+		applyMiddleware(
+			makeMiddleware({
+				actionTypes: [TRACKED_ACTION],
+				environment: 'localhost',
+				product: 'ConsentAdminUITests',
+				segmentKey: 'FAKEKEY',
+				...args
+			})
+		)
+	);
 }
 
 describe('makeMiddleware', function() {
@@ -63,5 +54,19 @@ describe('makeMiddleware', function() {
 		const props = trackAction.mock.calls[0][1];
 		assert.equal(props.foo, 'bar');
 		assert.equal(props.baz, 'buzz');
+	});
+
+	it('maps action types to event names via getEventName', function() {
+		const trackAction = jest.fn();
+		const getEventName = action => `MYACTION_${action.type}`;
+		const store = makeStoreWithMiddleware({ trackAction, getEventName });
+
+		const action = { type: TRACKED_ACTION, payload: 'PAYLOAD' };
+		store.dispatch(action);
+
+		assert.equal(trackAction.mock.calls.length, 1);
+		const [type, props] = trackAction.mock.calls[0];
+		assert.equal(type, 'MYACTION_TRACKED_ACTION');
+		assert.strictEqual(props.action, action);
 	});
 });
