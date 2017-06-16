@@ -1,7 +1,6 @@
 /* @flow */
 
 import assert from 'assert';
-import sinon from 'sinon';
 import {
   applyMiddleware,
   createStore
@@ -32,44 +31,36 @@ function makeStoreWithMiddleware({ selector = () => ({}), trackAction }: MakeSto
 }
 
 describe('makeMiddleware', function() {
-	beforeEach(function() {
-		this.sandbox = sinon.sandbox.create();
-	});
-
-	afterEach(function() {
-		this.sandbox.restore();
-	});
-
 	it('calls trackAction if action in actionTypes', function() {
-		const trackAction = sinon.stub();
+		const trackAction = jest.fn();
 		const store = makeStoreWithMiddleware({ trackAction });
 
 		const action = { type: TRACKED_ACTION, payload: 'PAYLOAD' };
 		store.dispatch(action);
 
-		assert.equal(trackAction.callCount, 1);
-		const [type, props] = trackAction.getCall(0).args;
+		assert.equal(trackAction.mock.calls.length, 1);
+		const [type, props] = trackAction.mock.calls[0];
 		assert.equal(type, TRACKED_ACTION);
 		assert.strictEqual(props.action, action);
 	});
 
 	it('does not call trackAction if action in actionTypes', function() {
-		const trackAction = sinon.stub();
+		const trackAction = jest.fn();
 		const store = makeStoreWithMiddleware({ trackAction });
 
 		store.dispatch({ type: 'UNTRACKED_ACTION' });
 
-		assert.equal(trackAction.callCount, 0);
+		assert.equal(trackAction.mock.calls.length, 0);
 	});
 
 	it('splats selector props onto properties', function() {
-		const trackAction = sinon.stub();
+		const trackAction = jest.fn();
 		const selector = () => ({ foo: 'bar', baz: 'buzz' });
 		const store = makeStoreWithMiddleware({ selector, trackAction });
 
 		store.dispatch({ type: TRACKED_ACTION });
 
-		const props = trackAction.getCall(0).args[1];
+		const props = trackAction.mock.calls[0][1];
 		assert.equal(props.foo, 'bar');
 		assert.equal(props.baz, 'buzz');
 	});
