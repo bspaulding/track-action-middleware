@@ -26,9 +26,10 @@ const makeMiddleware = ({
 }: MakeMiddlewareArgs) => {
 	return (store: Store) => (next: Function) => (action: Action) => {
 		if (actionTypes.indexOf(action.type) >= 0) {
-			trackAction(getEventName(action), {
+			const selection = selector(store.getState(), action);
+			trackAction(getEventName(action, selection), {
 				action,
-				...selector(store.getState(), action)
+				...selection
 			});
 		}
 

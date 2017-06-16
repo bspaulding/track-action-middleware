@@ -69,4 +69,15 @@ describe('makeMiddleware', function() {
 		assert.equal(type, 'MYACTION_TRACKED_ACTION');
 		assert.strictEqual(props.action, action);
 	});
+
+	it('passes selection to getEventName', function() {
+		const trackAction = jest.fn();
+		const getEventName = (action, selection) => `${action.type}-${selection.companyId}`;
+		const selector = () => ({ companyId: 'companyId' });
+		const store = makeStoreWithMiddleware({ selector, trackAction, getEventName });
+
+		store.dispatch({ type: TRACKED_ACTION });
+
+		assert.equal(trackAction.mock.calls[0][0], 'TRACKED_ACTION-companyId');
+	});
 });
