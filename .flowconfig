@@ -1,2 +1,11 @@
 [ignore]
-.*/node_modules/chalk/.*
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]
