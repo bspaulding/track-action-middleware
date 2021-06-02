@@ -1,6 +1,5 @@
 /* @flow */
 
-import assert from 'assert';
 import { applyMiddleware, createStore } from 'redux';
 import makeMiddleware from './index';
 
@@ -29,10 +28,10 @@ describe('makeMiddleware', function() {
 		const action = { type: TRACKED_ACTION, payload: 'PAYLOAD' };
 		store.dispatch(action);
 
-		assert.equal(trackAction.mock.calls.length, 1);
+		expect(trackAction.mock.calls.length).toBe(1);
 		const [type, props] = trackAction.mock.calls[0];
-		assert.equal(type, TRACKED_ACTION);
-		assert.strictEqual(props.action, action);
+		expect(type).toBe(TRACKED_ACTION);
+		expect(props.action).toBe(action);
 	});
 
 	it('does not call trackAction if action in actionTypes', function() {
@@ -41,7 +40,7 @@ describe('makeMiddleware', function() {
 
 		store.dispatch({ type: 'UNTRACKED_ACTION' });
 
-		assert.equal(trackAction.mock.calls.length, 0);
+		expect(trackAction.mock.calls.length).toBe(0);
 	});
 
 	it('splats selector props onto properties', function() {
@@ -52,8 +51,8 @@ describe('makeMiddleware', function() {
 		store.dispatch({ type: TRACKED_ACTION });
 
 		const props = trackAction.mock.calls[0][1];
-		assert.equal(props.foo, 'bar');
-		assert.equal(props.baz, 'buzz');
+		expect(props.foo).toBe('bar');
+		expect(props.baz).toBe('buzz');
 	});
 
 	it('maps action types to event names via getEventName', function() {
@@ -64,10 +63,10 @@ describe('makeMiddleware', function() {
 		const action = { type: TRACKED_ACTION, payload: 'PAYLOAD' };
 		store.dispatch(action);
 
-		assert.equal(trackAction.mock.calls.length, 1);
+		expect(trackAction.mock.calls.length).toBe(1);
 		const [type, props] = trackAction.mock.calls[0];
-		assert.equal(type, 'MYACTION_TRACKED_ACTION');
-		assert.strictEqual(props.action, action);
+		expect(type).toBe('MYACTION_TRACKED_ACTION');
+		expect(props.action).toBe(action);
 	});
 
 	it('passes selection to getEventName', function() {
@@ -78,6 +77,6 @@ describe('makeMiddleware', function() {
 
 		store.dispatch({ type: TRACKED_ACTION });
 
-		assert.equal(trackAction.mock.calls[0][0], 'TRACKED_ACTION-companyId');
+		expect(trackAction.mock.calls[0][0]).toBe('TRACKED_ACTION-companyId');
 	});
 });
